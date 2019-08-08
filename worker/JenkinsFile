@@ -46,7 +46,6 @@ pipeline{
             } 
 	    when{
                 changeset "**/worker/**"
-		branch 'master'
             }
             steps{
                 echo "Hello! packaging worker"
@@ -59,13 +58,13 @@ pipeline{
 	stage('docker-package'){
           agent any
           when{
-            changeset "**/vote/**"
+            changeset "**/worker/**"
           }
           steps{
             echo 'Packaging vote app with docker'
             script{
               docker.withRegistry('https://index.docker.io/v1/', 'dockerlogin') {
-                  def voteImage = docker.build("bhanushalihitesh/vote:v${env.BUILD_ID}", "./vote")
+                  def voteImage = docker.build("bhanushalihitesh/worker:v${env.BUILD_ID}", "./vote")
                   voteImage.push()
                   voteImage.push("latest")
               }
