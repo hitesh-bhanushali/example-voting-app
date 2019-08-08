@@ -50,7 +50,7 @@ pipeline{
            } 
        }
     }
-    
+} 
     post{
         always{
             echo "This pipeline run is completed.."
